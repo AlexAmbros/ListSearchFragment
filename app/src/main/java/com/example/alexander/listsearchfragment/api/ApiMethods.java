@@ -14,14 +14,13 @@ import java.net.URLEncoder;
  */
 public class ApiMethods {
     private static final String GOOGLE_SEARCH_API_METHOD = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
+    private static final String CHARSET = "UTF-8";
 
     public static GoogleResults performSearch(String search) throws Exception {
-        String charset = "UTF-8";
-
-        URL url = new URL(GOOGLE_SEARCH_API_METHOD + URLEncoder.encode(search, charset));
+        URL url = new URL(GOOGLE_SEARCH_API_METHOD + URLEncoder.encode(search, CHARSET));
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestProperty("Accept-Charset", charset);
-        Reader reader = new InputStreamReader(urlConnection.getInputStream(), charset);
+        urlConnection.setRequestProperty("Accept-Charset", CHARSET);
+        Reader reader = new InputStreamReader(urlConnection.getInputStream(), CHARSET);
 
         GoogleResults results = new Gson().fromJson(reader, GoogleResults.class);
         return results;

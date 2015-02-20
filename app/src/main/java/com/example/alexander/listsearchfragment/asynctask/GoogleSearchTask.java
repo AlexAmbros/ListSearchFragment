@@ -1,9 +1,6 @@
 package com.example.alexander.listsearchfragment.asynctask;
 
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.alexander.listsearchfragment.ui.ListSearchFragment;
 import com.example.alexander.listsearchfragment.api.ApiMethods;
@@ -25,8 +22,7 @@ public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults>
 
     @Override
     protected void onPreExecute() {
-        listSearchFragment.getProgressBar().setVisibility(View.VISIBLE);
-        listSearchFragment.getSearchButton().setEnabled(false);
+        listSearchFragment.updateContentViews(true);
     }
 
     @Override
@@ -36,26 +32,16 @@ public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults>
 
     @Override
     protected void onResult(GoogleResults results) {
-        listSearchFragment.getProgressBar().setVisibility(View.GONE);
-        listSearchFragment.getSearchButton().setEnabled(true);
+        listSearchFragment.updateContentViews(false);
         if (results != null) {
             List<String> resultsTitlesList = convertGoogleResultToString(results);
-            ListView resultsListView = listSearchFragment.getListView();
-            updateListView(resultsListView, resultsTitlesList);
-            resultsListView.setVisibility(View.VISIBLE);
+            listSearchFragment.updateListViewContent(resultsTitlesList);
         }
     }
 
     @Override
     protected void onException(Exception exception) {
         Log.e(TAG, "Exception occurred : " + exception.toString());
-    }
-
-    private void updateListView(ListView resultsListView, List<String> resultsList) {
-
-        resultsListView.setVisibility(View.VISIBLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(listSearchFragment.getActivity(), android.R.layout.simple_list_item_1, resultsList);
-        resultsListView.setAdapter(adapter);
     }
 
     private List<String> convertGoogleResultToString(GoogleResults results) {

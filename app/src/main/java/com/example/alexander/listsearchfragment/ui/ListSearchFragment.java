@@ -10,17 +10,22 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.alexander.listsearchfragment.R;
+import com.example.alexander.listsearchfragment.adapters.ResultSearchAdapter;
 import com.example.alexander.listsearchfragment.asynctask.GoogleSearchTask;
+
+import java.util.List;
 
 /**
  * Created by alexander on 19.02.15.
  */
 public class ListSearchFragment extends Fragment {
-    private ProgressBar progressBar;
     private EditText editText;
+    private ProgressBar progressBar;
+    private ListView resultsListView;
     private View searchButton;
     private View rootView;
-    private ListView resultsListView;
+
+    private ResultSearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,23 +35,25 @@ public class ListSearchFragment extends Fragment {
         return rootView;
     }
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
+    public void updateContentViews(boolean isLoadingStarted) {
+        searchButton.setEnabled(!isLoadingStarted);
+        progressBar.setVisibility(isLoadingStarted? View.VISIBLE : View.GONE);
+        resultsListView.setVisibility(isLoadingStarted? View.GONE : View.VISIBLE);
     }
 
-    public View getSearchButton() {
-        return searchButton;
-    }
-
-    public ListView getListView() {
-        return resultsListView;
+    public void updateListViewContent(List<String> resultsList) {
+        adapter.setItems(resultsList);
     }
 
     private void initViews(View rootView) {
-        resultsListView = (ListView) rootView.findViewById(R.id.results_list_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         editText = (EditText) rootView.findViewById(R.id.search_edit_text);
         searchButton = rootView.findViewById(R.id.start_search_button);
+
+        adapter = new ResultSearchAdapter(this.getActivity(), R.layout.search_list_item);
+        resultsListView = (ListView) rootView.findViewById(R.id.results_list_view);
+        resultsListView.setAdapter(adapter);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
