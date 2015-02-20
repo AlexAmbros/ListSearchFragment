@@ -1,7 +1,9 @@
 package com.example.alexander.listsearchfragment.asynctask;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.alexander.listsearchfragment.R;
 import com.example.alexander.listsearchfragment.ui.ListSearchFragment;
 import com.example.alexander.listsearchfragment.api.ApiMethods;
 import com.example.alexander.listsearchfragment.model.GoogleResults;
@@ -42,6 +44,8 @@ public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults>
     @Override
     protected void onException(Exception exception) {
         Log.e(TAG, "Exception occurred : " + exception.toString());
+        listSearchFragment.updateContentViews(false);
+        Toast.makeText(listSearchFragment.getActivity(), R.string.error_occurred, Toast.LENGTH_SHORT).show();
     }
 
     private List<String> convertGoogleResultToString(GoogleResults results) {
