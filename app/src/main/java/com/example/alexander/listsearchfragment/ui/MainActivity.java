@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.alexander.listsearchfragment.R;
+import com.example.alexander.listsearchfragment.ui.asynctask.GoogleSearchTask;
 import com.example.alexander.listsearchfragment.ui.model.GoogleResults;
 import com.google.gson.Gson;
 
@@ -52,71 +53,37 @@ public class MainActivity extends ActionBarActivity {
         return searchButton;
     }
 
-    public static GoogleResults performSearch(String search) throws Exception {
-        String google = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
-        String charset = "UTF-8";
-
-        URL url = new URL(google + URLEncoder.encode(search, charset));
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestProperty("Accept-Charset", charset);
-        Reader reader = new InputStreamReader(urlConnection.getInputStream(), charset);
-
-        GoogleResults results = new Gson().fromJson(reader, GoogleResults.class);
-        return results;
-    }
-
-//    private static void readStream(InputStream in) {
-//        BufferedReader reader = null;
-//        try {
-//            reader = new BufferedReader(new InputStreamReader(in));
-//            String line = "";
-//            while ((line = reader.readLine()) != null) {
-//                System.out.println(line);
+//    private static class GoogleSearchTask extends AsyncTask<String, Void, GoogleResults> {
+//        private MainActivity mainActivity;
+//
+//        public GoogleSearchTask(MainActivity mainActivity) {
+//            this.mainActivity = mainActivity;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            mainActivity.getProgressBar().setVisibility(View.VISIBLE);
+//            mainActivity.getSearchButton().setEnabled(false);
+//        }
+//
+//        @Override
+//        protected GoogleResults doInBackground(String... params) {
+//            GoogleResults results = null;
+//            try {
+//                results = MainActivity.performSearch(params[0]);
+//            } catch (Exception exception) {
+//                Log.e(TAG, "Exception occurred : " + exception.toString());
 //            }
-//        } catch (IOException ioException) {
-//            ioException.printStackTrace();
-//        } finally {
-//            if (reader != null) {
-//                try {
-//                    reader.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+//            return results;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(GoogleResults result) {
+//            mainActivity.getProgressBar().setVisibility(View.GONE);
+//            mainActivity.getSearchButton().setEnabled(true);
+//            if (result != null) {
+//
 //            }
 //        }
 //    }
-
-    private static class GoogleSearchTask extends AsyncTask<String, Void, GoogleResults> {
-        private MainActivity mainActivity;
-
-        public GoogleSearchTask(MainActivity mainActivity) {
-            this.mainActivity = mainActivity;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mainActivity.getProgressBar().setVisibility(View.VISIBLE);
-            mainActivity.getSearchButton().setEnabled(false);
-        }
-
-        @Override
-        protected GoogleResults doInBackground(String... params) {
-            GoogleResults results = null;
-            try {
-                results = MainActivity.performSearch(params[0]);
-            } catch (Exception exception) {
-                Log.e(TAG, "Exception occurred : " + exception.toString());
-            }
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(GoogleResults result) {
-            mainActivity.getProgressBar().setVisibility(View.GONE);
-            mainActivity.getSearchButton().setEnabled(true);
-            if (result != null) {
-
-            }
-        }
-    }
 }
