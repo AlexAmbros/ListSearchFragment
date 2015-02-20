@@ -3,7 +3,7 @@ package com.example.alexander.listsearchfragment.asynctask;
 import android.util.Log;
 import android.view.View;
 
-import com.example.alexander.listsearchfragment.ui.MainActivity;
+import com.example.alexander.listsearchfragment.ui.ListSearchFragment;
 import com.example.alexander.listsearchfragment.api.ApiMethods;
 import com.example.alexander.listsearchfragment.model.GoogleResults;
 
@@ -12,16 +12,16 @@ import com.example.alexander.listsearchfragment.model.GoogleResults;
  */
 public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults> {
     private static final String TAG = GoogleSearchTask.class.getSimpleName();
-    private MainActivity mainActivity;
+    private ListSearchFragment listSearchFragment;
 
-    public GoogleSearchTask(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public GoogleSearchTask(ListSearchFragment listSearchFragment) {
+        this.listSearchFragment = listSearchFragment;
     }
 
     @Override
     protected void onPreExecute() {
-        mainActivity.getProgressBar().setVisibility(View.VISIBLE);
-        mainActivity.getSearchButton().setEnabled(false);
+        listSearchFragment.getProgressBar().setVisibility(View.VISIBLE);
+        listSearchFragment.getSearchButton().setEnabled(false);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults>
 
     @Override
     protected void onResult(GoogleResults result) {
-        mainActivity.getProgressBar().setVisibility(View.GONE);
-        mainActivity.getSearchButton().setEnabled(true);
+        listSearchFragment.getProgressBar().setVisibility(View.GONE);
+        listSearchFragment.getSearchButton().setEnabled(true);
         if (result != null) {
             //result downloaded
         }
