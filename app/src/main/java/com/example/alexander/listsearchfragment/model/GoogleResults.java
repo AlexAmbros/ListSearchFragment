@@ -20,7 +20,7 @@ public class GoogleResults {
         return "ResponseData[" + responseData + "]";
     }
 
-    static class ResponseData {
+    public static class ResponseData {
         private List<Result> results;
 
         public List<Result> getResults() {
@@ -36,7 +36,7 @@ public class GoogleResults {
         }
     }
 
-    static class Result {
+    public static class Result {
         private String url;
         private String title;
 

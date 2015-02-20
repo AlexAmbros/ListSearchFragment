@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.alexander.listsearchfragment.R;
@@ -19,11 +20,13 @@ public class ListSearchFragment extends Fragment {
     private EditText editText;
     private View searchButton;
     private View rootView;
+    private ListView resultsListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.search_list_fragment_layout, null);
         initViews(rootView);
+
         return rootView;
     }
 
@@ -35,7 +38,12 @@ public class ListSearchFragment extends Fragment {
         return searchButton;
     }
 
+    public ListView getListView() {
+        return resultsListView;
+    }
+
     private void initViews(View rootView) {
+        resultsListView = (ListView) rootView.findViewById(R.id.results_list_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         editText = (EditText) rootView.findViewById(R.id.search_edit_text);
         searchButton = rootView.findViewById(R.id.start_search_button);

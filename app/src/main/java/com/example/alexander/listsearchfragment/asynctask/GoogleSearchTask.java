@@ -2,10 +2,15 @@ package com.example.alexander.listsearchfragment.asynctask;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.alexander.listsearchfragment.ui.ListSearchFragment;
 import com.example.alexander.listsearchfragment.api.ApiMethods;
 import com.example.alexander.listsearchfragment.model.GoogleResults;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by OAmbros on 20.02.2015.
@@ -30,16 +35,38 @@ public class GoogleSearchTask extends BaseAsyncTask<String, Void, GoogleResults>
     }
 
     @Override
-    protected void onResult(GoogleResults result) {
+    protected void onResult(GoogleResults results) {
         listSearchFragment.getProgressBar().setVisibility(View.GONE);
         listSearchFragment.getSearchButton().setEnabled(true);
-        if (result != null) {
-            //result downloaded
+        if (results != null) {
+            List<String> resultsTitlesList = convertGoogleResultToString(results);
+            ListView resultsListView = listSearchFragment.getListView();
+            updateListView(resultsListView, resultsTitlesList);
+            resultsListView.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     protected void onException(Exception exception) {
         Log.e(TAG, "Exception occurred : " + exception.toString());
+    }
+
+    private void updateListView(ListView resultsListView, List<String> resultsList) {
+
+        resultsListView.setVisibility(View.VISIBLE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(listSearchFragment.getActivity(), android.R.layout.simple_list_item_1, resultsList);
+        resultsListView.setAdapter(adapter);
+    }
+
+    private List<String> convertGoogleResultToString(GoogleResults results) {
+        List<String> googleSearchResultsTitles = new ArrayList<>();
+        List<GoogleResults.Result> resultsList = results.getResponseData().getResults();
+        if (resultsList != null && resultsList.size() > 0) {
+            for (GoogleResults.Result result : resultsList) {
+                googleSearchResultsTitles.add(result.getTitle());
+            }
+        }
+
+        return googleSearchResultsTitles;
     }
 }
