@@ -1,11 +1,11 @@
-package com.example.alexander.listsearchfragment.ui.asynctask;
+package com.example.alexander.listsearchfragment.asynctask;
 
 import android.util.Log;
 import android.view.View;
 
 import com.example.alexander.listsearchfragment.ui.MainActivity;
-import com.example.alexander.listsearchfragment.ui.api.ApiMethods;
-import com.example.alexander.listsearchfragment.ui.model.GoogleResults;
+import com.example.alexander.listsearchfragment.api.ApiMethods;
+import com.example.alexander.listsearchfragment.model.GoogleResults;
 
 /**
  * Created by OAmbros on 20.02.2015.

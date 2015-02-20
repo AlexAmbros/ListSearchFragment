@@ -1,4 +1,4 @@
-package com.example.alexander.listsearchfragment.ui.model;
+package com.example.alexander.listsearchfragment.model;
 
 import java.util.List;
 

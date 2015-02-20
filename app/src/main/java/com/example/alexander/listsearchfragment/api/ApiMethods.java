@@ -1,6 +1,6 @@
-package com.example.alexander.listsearchfragment.ui.api;
+package com.example.alexander.listsearchfragment.api;
 
-import com.example.alexander.listsearchfragment.ui.model.GoogleResults;
+import com.example.alexander.listsearchfragment.model.GoogleResults;
 import com.google.gson.Gson;
 
 import java.io.InputStreamReader;

@@ -1,4 +1,4 @@
-package com.example.alexander.listsearchfragment.ui.asynctask;
+package com.example.alexander.listsearchfragment.asynctask;
 
 import android.os.AsyncTask;
 
